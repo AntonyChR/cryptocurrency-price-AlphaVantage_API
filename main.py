@@ -1,6 +1,7 @@
 from tkinter import Tk, Button, Frame
 from tkinter.ttk import Combobox
-from Modules.API_parameters_values import cryptocurrencies
+from Modules.API_parameters_values import cryptocurrencies, time_series
+
 
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, 
@@ -62,7 +63,12 @@ Physical_currency = Combobox(config_frame, text = "currencies")
 Physical_currency.grid(row = 1, column = 0)
 Physical_currency["values"] = name_ph
 Physical_currency.set("Peruvian Nuevo Sol")
-#Physical_currency.set("Bitcoin")
+
+#time intervals
+time_intervals = Combobox(config_frame, text = "time")
+time_intervals.grid(row = 2, column = 0)
+time_intervals["values"] = list(time_series.keys())
+time_intervals.set("Intraday")
 
 # button that displays the plot
 plot_button = Button(master = config_frame, 
@@ -71,7 +77,7 @@ plot_button = Button(master = config_frame,
                     width = 10,
                     text = "Plot")
 
-plot_button.grid(row = 2, column = 0)
+plot_button.grid(row = 3, column = 0)
 
 plot_frame = Frame(window)
 plot_frame.grid(row = 0, column = 1)
