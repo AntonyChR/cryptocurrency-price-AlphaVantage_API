@@ -1,4 +1,4 @@
-from tkinter import Tk, Button, Frame, LEFT
+from tkinter import Tk, Button, Frame, LEFT, IntVar, Spinbox
 from tkinter.ttk import Combobox
 from Modules.API_parameters_values import cryptocurrencies, time_series
 
@@ -11,7 +11,7 @@ def plot():
     #------------- indice del elemento seleccionado
     print(crypto_list.current())
     # the figure that will contain the plot
-    fig = Figure(figsize = (5, 5), dpi = 100)
+    fig = Figure(figsize = (10, 6.5), dpi = 100)
     y = [i**2 for i in range(101)]
     # adding the subplot
     plot1 = fig.add_subplot(111)
@@ -43,28 +43,33 @@ window = Tk()
 window.title('Plotting in Tkinter')
 
 # dimensions of the main window
-window.geometry("700x500")
+window.geometry("700x550")
 
 config_frame = Frame(window)
 config_frame.pack(side = LEFT)
 
 #list that displays cryptocurrencies
 crypto_list = Combobox(config_frame, text = "Cryptocurrencies")
-crypto_list.pack()
+crypto_list.pack(padx = 10, pady = 10)
 crypto_list["values"] = name_curr
 crypto_list.set("Bitcoin")
 
 #list price in physical currency
 Physical_currency = Combobox(config_frame, text = "currencies")
-Physical_currency.pack()
+Physical_currency.pack(padx = 10, pady = 10)
 Physical_currency["values"] = name_ph
 Physical_currency.set("Peruvian Nuevo Sol")
 
 #time intervals
 time_intervals = Combobox(config_frame, text = "time")
-time_intervals.pack()
+time_intervals.pack(padx = 10, pady = 10)
 time_intervals["values"] = list(time_series.keys())
 time_intervals.set("Intraday")
+#average size
+average = IntVar()
+average.set(5)
+size_average = Spinbox(config_frame, from_=5, increment=1,to = 20, width = 21, textvariable = str(average))
+size_average.pack(padx = 10, pady = 10)
 
 # button that displays the plot
 plot_button = Button(master = config_frame, 
