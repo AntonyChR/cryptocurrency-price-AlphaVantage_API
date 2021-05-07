@@ -1,15 +1,32 @@
 from tkinter import Tk, Button, Frame, LEFT, IntVar, Spinbox
 from tkinter.ttk import Combobox
 from Modules.API_parameters_values import cryptocurrencies, time_series
+from Modules.data import *
 
 
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, 
 NavigationToolbar2Tk)
 
+url="https://www.alphavantage.co/query?"
+APIkey = "F8EZV5KIZ5A1IJDX"
+
+path_curr            = "./assets/digital_currency_list.csv"
+path_ph              = "./assets/physical_currency_list.csv"
+name_curr, code_curr = cryptocurrencies(path_curr)
+name_ph, code_ph     = cryptocurrencies(path_ph)
+
+
 def plot():
     #------------- indice del elemento seleccionado
-    print(crypto_list.current())
+    get_info(url,
+            time_series[time_intervals.get()],
+            code_curr[time_intervals.current()],
+            code_ph[crypto_list.current()],
+            APIkey
+            )
+            #average.get(),
+
     # the figure that will contain the plot
     fig = Figure(figsize = (10, 6.5), dpi = 100)
     y = [i**2 for i in range(101)]
@@ -29,11 +46,6 @@ def plot():
 
     # placing the toolbar on the Tkinter window
     canvas.get_tk_widget().pack()
-
-path_curr = "./assets/digital_currency_list.csv"
-path_ph   = "./assets/physical_currency_list.csv"
-name_curr, code_curr = cryptocurrencies(path_curr)
-name_ph, code_ph     = cryptocurrencies(path_ph)
 
 #---------------------------------------------------------
 # the main Tkinter window

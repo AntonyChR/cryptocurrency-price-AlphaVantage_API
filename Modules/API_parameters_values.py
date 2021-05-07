@@ -9,5 +9,5 @@ time_series = {"Intraday": "CRYPTO_INTRADAY",
 #price in physical currency
 def cryptocurrencies(path: str) -> [list, list]:
     df = read_csv(path)
-    return list(df["currency name"]),list(df["currency name"])
+    return list(df["currency name"]),list(df["currency code"])
 
