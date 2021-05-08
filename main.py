@@ -24,8 +24,7 @@ name_ph, code_ph     = cryptocurrencies(path_ph)
 status = "no"
 
 def plot():
-    plt.close("all")
-    #------------- indice del elemento seleccionado
+    plot1.clear()
     ts = time_series[time_intervals.get()]
     cc =code_curr[crypto_list.current()]
     cp = code_ph[Physical_currency.current()]
@@ -38,34 +37,16 @@ def plot():
     df_price["average"] = df_price["price"].rolling(10).mean()
 
     date = list(map(datetime.strptime, date, len(date)*['%Y-%m-%d']))
-    # the figure that will contain the plot
-    fig = Figure(figsize = (10, 6.5), dpi = 100)
-    # adding the subplot
-    plot1 = fig.add_subplot()
-    # plotting the graph
     title = f"{crypto_list.get()}({cc})"
+    
     plot1.set_title(title)
     plot1.plot(date, price)
     plot1.plot(date, df_price["average"])
 
     plot1.grid(True)
     fig.autofmt_xdate(rotation = 45)
-    # creating the Tkinter canvas
-    # containing the Matplotlib figure
-    canvas = FigureCanvasTkAgg(fig, master = plot_frame)  
     canvas.draw()
-    # placing the canvas on the Tkinter plot_frame
-    canvas.get_tk_widget().pack()
-    # creating the Matplotlib toolbar
-    toolbar = NavigationToolbar2Tk(canvas, plot_frame)
-    toolbar.pack()
-    toolbar.update()
-    plot1.clear()
-
-    # placing the toolbar on the Tkinter window
-    canvas.get_tk_widget().pack()
     
-
 #---------------------------------------------------------
 # the main Tkinter window
 window = Tk()
@@ -114,4 +95,23 @@ plot_button.pack()
 
 plot_frame = Frame(window)
 plot_frame.pack()
+#create canvas
+fig = Figure(figsize = (10, 6.5), dpi = 100)
+# the figure that will contain the plot
+# adding the subplot
+plot1 = fig.add_subplot()
+# containing the Matplotlib figure
+canvas = FigureCanvasTkAgg(fig, master = plot_frame)  
+canvas.draw()
+# placing the canvas on the Tkinter plot_frame
+canvas.get_tk_widget().pack()
+# creating the Matplotlib toolbar
+toolbar = NavigationToolbar2Tk(canvas, plot_frame)
+toolbar.pack()
+toolbar.update()
+
+# placing the toolbar on the Tkinter window
+canvas.get_tk_widget().pack()
+    
+
 window.mainloop()
