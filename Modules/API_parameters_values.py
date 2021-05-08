@@ -1,6 +1,6 @@
 from pandas import read_csv
-
-time_series = {"Intraday": "CRYPTO_INTRADAY",
+#"Intraday": "CRYPTO_INTRADAY",
+time_series = {
                 "Daily"  : "DIGITAL_CURRENCY_DAILY",
                 "Weekly" : "DIGITAL_CURRENCY_WEEKLY",
                 "Monthly": "DIGITAL_CURRENCY_MONTHLY"
