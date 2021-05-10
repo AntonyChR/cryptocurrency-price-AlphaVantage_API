@@ -1,6 +1,7 @@
 currency code,currency name
 BTC,Bitcoin
 ETH,Ethereum
+ADA,Cardano
 1ST,FirstBlood
 2GIVE,GiveCoin
 808,808Coin
@@ -9,7 +10,6 @@ ABT,ArcBlock
 ABY,ArtByte
 AC,AsiaCoin
 ACT,Achain
-ADA,Cardano
 ADT,adToken
 ADX,AdEx
 AE,Aeternity

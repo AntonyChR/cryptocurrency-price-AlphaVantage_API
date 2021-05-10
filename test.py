@@ -32,7 +32,7 @@ j = 0
 num_k = len(llaves)
 for i,sym in enumerate(code):
 
-    if j == num_k-1:
+    if j == 4:
         sleep(75)
     j = 0 if j==num_k-1 else j+1
     APIkey = llaves[j]
