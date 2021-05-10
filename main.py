@@ -14,38 +14,41 @@ from Modules.API_parameters_values import cryptocurrencies, time_series
 from Modules.data import get_info, filter_data
 
 url="https://www.alphavantage.co/query?"
-APIkey = "F8EZV5KIZ5A1IJDX"
+
+APIkey,_ = open("key.txt","r").readline().split("\n")
 
 path_curr            = "./assets/digital_currency_list.csv"
 path_ph              = "./assets/physical_currency_list.csv"
 name_curr, code_curr = cryptocurrencies(path_curr)
 name_ph, code_ph     = cryptocurrencies(path_ph)
 
-status = "no"
-
 def plot():
     plot1.clear()
     ts = time_series[time_intervals.get()]
     cc =code_curr[crypto_list.current()]
     cp = code_ph[Physical_currency.current()]
-    print(ts, cc, cp)
-    info = get_info(url, ts, cc, cp, APIkey)
+    try:
+        info = get_info(url, ts, cc, cp, APIkey)
+        date, price = filter_data(info,time_intervals.get(),cp)
+        df_price = DataFrame(price, columns = ["price"])
+        df_price["average"] = df_price["price"].rolling(average.get()).mean()
 
-            #average.get(),
-    date, price = filter_data(info,time_intervals.get(),cp)
-    df_price = DataFrame(price, columns = ["price"])
-    df_price["average"] = df_price["price"].rolling(10).mean()
-
-    date = list(map(datetime.strptime, date, len(date)*['%Y-%m-%d']))
-    title = f"{crypto_list.get()}({cc})"
+        date = list(map(datetime.strptime, date, len(date)*['%Y-%m-%d']))
+        title = f"{crypto_list.get()}({cc})"
     
-    plot1.set_title(title)
-    plot1.plot(date, price)
-    plot1.plot(date, df_price["average"])
+        plot1.set_title(title)
+        plot1.set_xlabel("Date")
+        plot1.set_ylabel(f"{Physical_currency.get()}")
+        plot1.plot(date, price,label= f"{cc}")
+        plot1.plot(date, df_price["average"],label="Average")
 
-    plot1.grid(True)
-    fig.autofmt_xdate(rotation = 45)
-    canvas.draw()
+        plot1.grid(True)
+        plot1.legend(loc="best")
+
+        fig.autofmt_xdate(rotation = 45)
+        canvas.draw()
+    except:
+        pass
     
 #---------------------------------------------------------
 # the main Tkinter window
@@ -55,7 +58,8 @@ window = Tk()
 window.title('Plotting in Tkinter')
 
 # dimensions of the main window
-window.geometry("700x550")
+#window.geometry("700x550")
+window.state("zoomed")
 
 config_frame = Frame(window)
 config_frame.pack(side = LEFT)
@@ -96,8 +100,8 @@ plot_button.pack()
 plot_frame = Frame(window)
 plot_frame.pack()
 #create canvas
-fig = Figure(figsize = (10, 6.5), dpi = 100)
 # the figure that will contain the plot
+fig = Figure(figsize = (12, 6.5), dpi = 100)
 # adding the subplot
 plot1 = fig.add_subplot()
 # containing the Matplotlib figure
