@@ -18,7 +18,7 @@ path = "./assets/digital_currency_list.csv"
 url="https://www.alphavantage.co/query?"
 interval = "DIGITAL_CURRENCY_DAILY"
 name, code = cryptocurrencies(path)
-llaves = ["UQ1U59KH7TUV3Y6J",
+api_key = ["UQ1U59KH7TUV3Y6J",
 	"16KZ5JMCP2RS49ST",
         "NRX6UP693G7KCHNR",
         "MH1VZWD3TCM9DKTQ",
@@ -29,13 +29,13 @@ llaves = ["UQ1U59KH7TUV3Y6J",
         "DHEQC98CQ5GB51BS",
 	"HTA1JUYWAF8B0H6U"]
 j = 0
-num_k = len(llaves)
+num_k = len(api_key)
 for i,sym in enumerate(code):
 
     if j == 4:
         sleep(75)
     j = 0 if j==num_k-1 else j+1
-    APIkey = llaves[j]
+    APIkey = api_key[j]
 
     resp = get_info(url,interval,sym,"PEN", APIkey)
     keys = list(resp.keys())
