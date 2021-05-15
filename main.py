@@ -25,8 +25,8 @@ name_ph, code_ph     = cryptocurrencies(path_ph)
 def plot():
     plot1.clear()
     ts = time_series[time_intervals.get()]
-    cc =code_curr[crypto_list.current()]
-    cp = code_ph[Physical_currency.current()]
+    cc = code_curr[crypto_list.current()]
+    cp = code_ph[physical_currency.current()]
     try:
         info = get_info(url, ts, cc, cp, APIkey)
         date, price = filter_data(info,time_intervals.get(),cp)
@@ -38,7 +38,7 @@ def plot():
     
         plot1.set_title(title)
         plot1.set_xlabel("Date")
-        plot1.set_ylabel(f"{Physical_currency.get()}")
+        plot1.set_ylabel(f"{physical_currency.get()}")
         plot1.plot(date, price,label= f"{cc}")
         plot1.plot(date, df_price["average"],label="Average")
 
@@ -71,10 +71,10 @@ crypto_list["values"] = name_curr
 crypto_list.set("Bitcoin")
 
 #list price in physical currency
-Physical_currency = Combobox(config_frame, text = "currencies")
-Physical_currency.pack(padx = 10, pady = 10)
-Physical_currency["values"] = name_ph
-Physical_currency.set("Peruvian Nuevo Sol")
+physical_currency = Combobox(config_frame, text = "currencies")
+physical_currency.pack(padx = 10, pady = 10)
+physical_currency["values"] = name_ph
+physical_currency.set("Peruvian Nuevo Sol")
 
 #time intervals
 time_intervals = Combobox(config_frame, text = "time")
